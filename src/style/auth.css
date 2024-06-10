@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+:root {
+  --primary-color: #000000;
+  --secondary-color: #FFFFFF;
+  --background-color: #f5f7fa;
+  --button-background: #000000;
+  --button-color: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  height: 100vh;
+}
+
+.auth-wrapper {
+    justify-content: space-between;
+    display: flex;
+    width: 80%;
+    background-color: var(--secondary-color);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-image {
+  margin-right: 20px;
+}
+
+.auth-image img {
+    border-radius: 8px;
+    width: 80%;
+}
+
+.auth-container {
+    width: 40%;
+  text-align: center;
+}
+
+.auth-animation {
+  width: 70%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.auth-form {
+  max-width: 400px;
+  margin: auto;
+}
+
+.auth-form h2 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.auth-form p {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.auth-form p a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.auth-input {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.auth-input label {
+  display: block;
+  margin-bottom: 5px;
+  color: var (--primary-color);
+}
+
+.auth-input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--button-background);
+  color: var(--button-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+.error-message{
+  color:red;
+}

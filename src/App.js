@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 
-const API_URL = process.env.REACT_APP_API_URL;
-
-function App() {
-  const [cars, setCars] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API_URL}/cars`)
-      .then(response => response.json())
-      .then(data => setCars(data))
-      .catch(error => console.log(error));
-  }, []);
-
+const App = () => {
   return (
-    <div className="App">
-      <h1>Car Rental</h1>
-      <ul>
-        {cars.map(car => (
-          <li key={car._id}>
-            {car.make} {car.model} ({car.year})
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={
+            <div>
+              <h1>Welcome to Car Rental</h1>
+              <p>Book your car now!</p>
+            </div>
+          } />
+        </Routes>
+      </Layout>
+    </Router>
   );
-}
+};
 
 export default App;
