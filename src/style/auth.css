@@ -62,7 +62,6 @@ body {
 
 .auth-form p {
   margin-bottom: 20px;
-  color: var(--primary-color);
 }
 
 .auth-form p a {
@@ -88,7 +87,7 @@ body {
   border-radius: 4px;
 }
 
-button {
+.auth-button {
   width: 100%;
   padding: 10px;
   background-color: var(--button-background);
@@ -98,10 +97,17 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.auth-button:hover {
   background-color: #333;
 }
 
 .error-message{
   color:red;
+}
+.error-message, .success-message {
+  color: #fff;
+  background-color: #ff4d4d;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }

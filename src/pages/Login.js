@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import '../style/auth.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,39 +20,40 @@ const Login = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
+        toast.success('Logged in successfully');
         navigate('/');
       } else {
-        setError(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      toast.error('An error occurred. Please try again.');
     }
   };
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-image">
-        <img src="loginpage.jpg" alt="Login Image" />
+    <main className="content">
+      <div className="auth-wrapper">
+        <div className="auth-image">
+          <img src="loginpage.jpg" alt="Login Image" />
+        </div>
+        <div className="auth-container">
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <h2>Sign in to your account</h2>
+            <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            <div className="auth-input">
+              <label>Email address</label>
+              <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+            <div className="auth-input">
+              <label>Password</label>
+              <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            </div>
+            <p>Forgot your password? <a href="/forgot-password">Reset it here</a></p>
+            <button className='auth-button' type="submit">Sign in</button>
+          </form>
+        </div>
       </div>
-      <div className="auth-container">
-        <img className="auth-animation" src="animationLogin.gif" alt="Login Animation" />
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <h2>Sign in to your account</h2>
-          <p>Don't have an account? <a href="/signup">Sign up</a></p>
-          <div className="auth-input">
-            <label>Email address</label>
-            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div className="auth-input">
-            <label>Password</label>
-            <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          </div>
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit">Sign in</button>
-        </form>
-      </div>
-    </div>
+    </main>
   );
 };
 

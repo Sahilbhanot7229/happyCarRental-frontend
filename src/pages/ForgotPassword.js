@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../style/auth.css';
 
-const Signup = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -11,23 +11,18 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-      return;
-    }
-
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
+      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, confirmPassword })
       });
       const data = await response.json();
       if (response.ok) {
         toast.success(data.message);
-        navigate('/login'); 
+        navigate('/login');
       } else {
         toast.error(data.message);
       }
@@ -44,21 +39,20 @@ const Signup = () => {
         </div>
         <div className="auth-container">
           <form className="auth-form" onSubmit={handleSubmit}>
-            <h2>Create an account</h2>
-            <p>Already have an account? <a href="/login">Sign in</a></p>
+            <h2>Reset Your Password</h2>
             <div className="auth-input">
               <label>Email address</label>
               <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
             <div className="auth-input">
-              <label>Password</label>
+              <label>New Password</label>
               <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <div className="auth-input">
-              <label>Confirm Password</label>
+              <label>Confirm New Password</label>
               <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
             </div>
-            <button className='auth-button' type="submit">Sign up</button>
+            <button className='auth-button' type="submit">Reset Password</button>
           </form>
         </div>
       </div>
@@ -66,4 +60,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default ForgotPassword;

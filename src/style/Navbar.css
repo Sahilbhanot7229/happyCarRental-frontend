@@ -42,7 +42,6 @@ a:hover {
 
 .brand img {
   max-width: 120px;
-  height: 100px;
   margin-right: 10px;
 }
 
@@ -104,4 +103,8 @@ a:hover {
   .nav .content .menu {
     display: initial;
   }
+}
+
+.error-message{
+  color: red;
 }
