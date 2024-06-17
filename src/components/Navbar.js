@@ -1,66 +1,157 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuth } from '../components/AuthContext';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 import '../style/Navbar.css';
 
 const Navbar = () => {
-  const dropdownRef = useRef(null);
-  const buttonRef = useRef(null);
-  const navRef = useRef(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { user, logout } = useAuth();
 
-  const menu = () => {
-    if (dropdownRef.current.style.display === "grid") {
-      dropdownRef.current.style.display = "none";
-      buttonRef.current.innerHTML = "menu";
-    } else {
-      dropdownRef.current.style.display = "grid";
-      buttonRef.current.innerHTML = "close";
-    }
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        dropdownRef.current.style.display = "none";
-        buttonRef.current.innerHTML = "menu";
-      }
-    };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-    const handleClickOutside = (event) => {
-      if (navRef.current && !navRef.current.contains(event.target)) {
-        if (dropdownRef.current.style.display === "grid") {
-          dropdownRef.current.style.display = "none";
-          buttonRef.current.innerHTML = "menu";
-        }
-      }
-    };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-    window.addEventListener("resize", handleResize);
-    document.addEventListener("click", handleClickOutside);
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  const pages = user
+    ? [
+        { title: 'Home', path: '/' },
+        { title: 'Cars', path: '/' },
+        { title: 'Profile', path: '/profile' },
+        { title: 'My Booking', path: '/' },
+        { title: 'Contact Us', path: '/contactUs' },
+      ]
+    : [
+        { title: 'Login', path: '/login' },
+        { title: 'Signup', path: '/signup' },
+      ];
 
   return (
-    <div className="nav" ref={navRef}>
-      <div className="content">
-        <h1 className="brand">
-          <img src="/logo.png" alt="Logo" />
-        </h1>
-        <div className="links nav-items">
-          <a href="/">Home</a>
-          <a href="/Login">Login</a>
-          <a href="/Signup">Signup</a>
-        </div>
-        <i className="material-icons menu" onClick={menu} ref={buttonRef}>menu</i>
-      </div>
-      <div className="dropdown" id="dropdown" ref={dropdownRef}>
-        <a href="/">Home</a>
-        <a href="/Login">Login</a>
-        <a href="/Signup">Signup</a>
-      </div>
-    </div>
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component={RouterLink}
+            to="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <img src="/logo.png" alt="Logo" style={{ width: '100px', marginRight: '10px' }} />
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="navigation menu"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+              keepMounted
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page.title} onClick={handleCloseNavMenu} component={RouterLink} to={page.path}>
+                  <Typography textAlign="center">{page.title}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component={RouterLink}
+            to="/"
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'flex', md: 'none' },
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <img src="/logo.png" alt="Logo" style={{ width: '100px', marginRight: '10px' }} />
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.title}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                component={RouterLink}
+                to={page.path}
+              >
+                {page.title}
+              </Button>
+            ))}
+          </Box>
+
+          {user && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar-user"
+                anchorEl={anchorElUser}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                keepMounted
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={logout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

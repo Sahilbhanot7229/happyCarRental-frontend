@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import '../style/auth.css';
-
 const Signup = () => {
+  const [username, setUsername] = useState('');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,14 +23,19 @@ const Signup = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({username, email, password })
       });
-      const data = await response.json();
+
+      const text = await response.text(); // Read the response as text
+
+      // Check if the response text is not empty before parsing as JSON
+      const data = text ? JSON.parse(text) : {};
+
       if (response.ok) {
-        toast.success(data.message);
-        navigate('/login'); 
+        toast.success(data.message || 'Signup successful');
+        navigate('/login');
       } else {
-        toast.error(data.message);
+        toast.error(data.message || 'An error occurred. Please try again.');
       }
     } catch (error) {
       toast.error('An error occurred. Please try again.');
@@ -46,6 +52,10 @@ const Signup = () => {
           <form className="auth-form" onSubmit={handleSubmit}>
             <h2>Create an account</h2>
             <p>Already have an account? <a href="/login">Sign in</a></p>
+            <div className="auth-input">
+              <label>Username</label>
+              <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            </div>
             <div className="auth-input">
               <label>Email address</label>
               <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
