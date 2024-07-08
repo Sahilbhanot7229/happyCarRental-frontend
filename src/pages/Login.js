@@ -30,6 +30,14 @@ const Login = () => {
       if (response.ok) {
         toast.success('Logged in successfully');
         login(data.user); 
+
+        if (data.user?.isAdmin) {
+          console.log("isAdmin");
+          loginAsAdmin(data.user);
+          return navigate("/Admin");
+        }
+
+
         navigate('/');
       } else {
         toast.error(data.message);

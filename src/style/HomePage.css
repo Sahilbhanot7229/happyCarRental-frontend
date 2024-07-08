@@ -27,6 +27,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .step {
@@ -125,6 +126,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .testimonial {
@@ -165,6 +167,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .feature {
@@ -191,3 +194,48 @@
   margin-bottom: 10px;
 }
 
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .steps, .features-container, .testimonials-container, .models-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .step-image img{
+    width: 70%;
+  }
+
+  .step, .feature, .testimonial, .model {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 1em;
+  }
+
+  .step h3, .feature h3, .model h3, .testimonial h3 {
+    font-size: 1.2em;
+  }
+
+  .car-models h2, .how-it-works h2, .why-choose-us h2, .customer-testimonials h2 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .step-number {
+    width: 25px;
+    height: 25px;
+    font-size: 0.9em;
+  }
+
+  .step h3, .feature h3, .model h3, .testimonial h3 {
+    font-size: 1em;
+  }
+
+  .car-models h2, .how-it-works h2, .why-choose-us h2, .customer-testimonials h2 {
+    font-size: 1.2em;
+  }
+}

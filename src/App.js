@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserProfile from './pages/UserProfile';
 import ContactUs from './pages/contact';
-
+import Admin from './pages/Admin';
 
 const App = () => {
   return (
@@ -25,6 +25,7 @@ const App = () => {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/contactUs" element={<ContactUs />} />
+            <Route path="/Admin" element={<Admin />} />
 
 
             <Route path="/" element={<Home />} />

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from '../components/AuthContext';
 import AppBar from '@mui/material/AppBar';
@@ -37,13 +37,20 @@ const Navbar = () => {
   };
 
   const pages = user
-    ? [
-        { title: 'Home', path: '/' },
-        { title: 'Cars', path: '/' },
-        { title: 'Profile', path: '/profile' },
-        { title: 'My Booking', path: '/' },
-        { title: 'Contact Us', path: '/contactUs' },
-      ]
+    ? user.isAdmin
+      ? [
+          { title: 'Add Car', path: '/Admin' },
+          { title: 'List Cars', path: '/list-cars' },
+          { title: 'Users', path: '/users' },
+          { title: 'Booked Car List', path: '/booked-cars' },
+        ]
+      : [
+          { title: 'Home', path: '/' },
+          { title: 'Cars', path: '/' },
+          { title: 'Profile', path: '/profile' },
+          { title: 'My Booking', path: '/' },
+          { title: 'Contact Us', path: '/contactUs' },
+        ]
     : [
         { title: 'Login', path: '/login' },
         { title: 'Signup', path: '/signup' },
@@ -130,7 +137,7 @@ const Navbar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>
+                  <Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

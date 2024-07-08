@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
+import emailjs from "emailjs-com";
 import '../style/contact.css'
+
 export default function ContactUs() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -13,7 +15,6 @@ export default function ContactUs() {
   const [feedback, setFeedback] = useState({ type: "", message: "" });
 
   useEffect(() => {
-    // If user is not logged in, redirect to login page
     if (!user) {
       navigate("/login");
     }
@@ -22,30 +23,26 @@ export default function ContactUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Sending email data to backend
-    const response = await fetch("http://localhost:5000/email/sendemail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    emailjs.send(
+      'service_a5jtfjf', 
+      'template_891qnyv', 
+      {
         to_name: "Admin",
         from_name: credentials.name,
-        email: credentials.email,
+        from_email: credentials.email,
         message: credentials.message,
-      }),
-    });
-
-    if (response.status === 200) {
+      },
+      'GXgLyu0sHiBx8U5wl' 
+    ).then((response) => {
       setFeedback({ type: "success", message: "Message sent successfully" });
       setCredentials({ name: "", email: "", message: "" });
       setTimeout(() => setFeedback({ type: "", message: "" }), 5000);
-    } else {
+    }).catch((error) => {
       setFeedback({
         type: "error",
         message: "Failed to send message. Please try again later.",
       });
-    }
+    });
   };
 
   const onChange = (e) => {
