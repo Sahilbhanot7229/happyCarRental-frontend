@@ -23,7 +23,7 @@ const CarPage = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/cars/');
+        const response = await fetch('https://happycarrental-backend.onrender.com/api/cars/');
         const data = await response.json();
         setCars(data);
         setFilteredCars(data); // Set initial filtered cars

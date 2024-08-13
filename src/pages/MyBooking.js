@@ -15,7 +15,7 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/booking/user/${user.id}`);
+        const response = await axios.get(`https://happycarrental-backend.onrender.com/api/booking/user/${user.id}`);
         setBookings(response.data);
       } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -109,7 +109,7 @@ const MyBookings = () => {
     const reviewText = reviewTexts[bookingId];
     if (reviewText) {
       try {
-        await axios.post(`http://localhost:5000/api/booking/add-review`, {
+        await axios.post(`https://happycarrental-backend.onrender.com/api/booking/add-review`, {
           userId: user.id,
           bookingId,
           review: reviewText
@@ -125,7 +125,7 @@ const MyBookings = () => {
         });
 
         // Optionally fetch the updated bookings to reflect the new review
-        // const response = await axios.get(`http://localhost:5000/api/booking/user/${user.id}`);
+        // const response = await axios.get(`https://happycarrental-backend.onrender.com/api/booking/user/${user.id}`);
         // setBookings(response.data);
       } catch (error) {
         console.error('Error submitting review:', error);
@@ -191,7 +191,7 @@ const CarImage = ({ imageId }) => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/images/${imageId}`, { responseType: 'arraybuffer' });
+        const response = await axios.get(`https://happycarrental-backend.onrender.com/api/images/${imageId}`, { responseType: 'arraybuffer' });
         const base64 = btoa(
           new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
         );

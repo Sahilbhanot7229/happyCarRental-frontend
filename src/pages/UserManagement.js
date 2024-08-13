@@ -17,7 +17,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/user/getUsers');
+      const response = await axios.get('https://happycarrental-backend.onrender.com/api/user/getUsers');
       setUsers(response.data.map(user => ({ ...user, isEditing: false })));
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -43,7 +43,7 @@ const UserManagement = () => {
   const handleSave = async (index) => {
     const user = users[index];
     try {
-      await axios.put('http://localhost:5000/api/user/adminUpdateProfile', {
+      await axios.put('https://happycarrental-backend.onrender.com/api/user/adminUpdateProfile', {
         email: user.email,
         username: user.username,
         isAdmin: user.isAdmin,
@@ -56,7 +56,7 @@ const UserManagement = () => {
 
   const handleDelete = async (email) => {
     try {
-      await axios.delete('http://localhost:5000/api/user/deleteuser', { data: { email } });
+      await axios.delete('https://happycarrental-backend.onrender.com/api/user/deleteuser', { data: { email } });
       fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -65,7 +65,7 @@ const UserManagement = () => {
 
   const handleAddUser = async () => {
     try {
-      await axios.post('http://localhost:5000/api/user/adduser', newUser);
+      await axios.post('https://happycarrental-backend.onrender.com/api/user/adduser', newUser);
       fetchUsers();
       setNewUser({
         username: '',

@@ -8,12 +8,12 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/cars')
+    fetch('https://happycarrental-backend.onrender.com/api/cars')
       .then((response) => response.json())
       .then((data) => setCars(data))
       .catch((error) => console.error('Error fetching cars:', error));
 
-    fetch('http://localhost:5000/api/booking/getAllBookings')
+    fetch('https://happycarrental-backend.onrender.com/api/booking/getAllBookings')
       .then((response) => response.json())
       .then((data) => {
         const allReviews = data.flatMap(booking => booking.reviews.map(review => ({

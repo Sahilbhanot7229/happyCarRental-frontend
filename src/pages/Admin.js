@@ -15,7 +15,7 @@ function Admin() {
 
     const fetchCars = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/cars/');
+            const response = await fetch('https://happycarrental-backend.onrender.com/api/cars/');
             const data = await response.json();
             setCars(data);
         } catch (error) {
@@ -37,7 +37,7 @@ function Admin() {
 
     const handleDeleteCarClick = async (carId) => {
         try {
-            await fetch(`http://localhost:5000/api/cars/delete-car/${carId}`, {
+            await fetch(`https://happycarrental-backend.onrender.com/api/cars/delete-car/${carId}`, {
                 method: 'DELETE'
             });
             fetchCars();
@@ -77,7 +77,7 @@ function Admin() {
             carData.imageId = currentCar.imageId._id;
         }
     
-        const url = formMode === 'add' ? 'http://localhost:5000/api/cars/add-car' : `http://localhost:5000/api/cars/update-car/${currentCar._id}`;
+        const url = formMode === 'add' ? 'https://happycarrental-backend.onrender.com/api/cars/add-car' : `https://happycarrental-backend.onrender.com/api/cars/update-car/${currentCar._id}`;
         const method = formMode === 'add' ? 'POST' : 'PUT';
     
         try {

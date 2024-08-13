@@ -20,7 +20,7 @@ const CheckoutForm = ({ formData, setFormData, price, selectedCar, closeModal })
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/booking/create-booking', {
+      const response = await fetch('https://happycarrental-backend.onrender.com/api/booking/create-booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const CheckoutForm = ({ formData, setFormData, price, selectedCar, closeModal })
         } else {
           console.log('Payment succeeded');
           // Call backend to confirm payment status and update booking
-          const paymentStatusResponse = await fetch('http://localhost:5000/api/booking/check-payment-status', {
+          const paymentStatusResponse = await fetch('https://happycarrental-backend.onrender.com/api/booking/check-payment-status', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ const CarBookingPage = () => {
   useEffect(() => {
     const fetchCarDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/cars/${id}`);
+        const response = await fetch(`https://happycarrental-backend.onrender.com/api/cars/${id}`);
         const data = await response.json();
         setSelectedCar(data);
       } catch (error) {
