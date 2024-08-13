@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../style/Admin.css';
+import withAdminCheck from '../components/withAdminCheck';
 
 function Admin() {
     const [showForm, setShowForm] = useState(false);
@@ -137,7 +138,7 @@ function Admin() {
                     <div className="form-container">
                         <p>{formMode === 'add' ? 'Add Car' : 'Update Car'}</p>
                         <button className="close-btn" onClick={handleCloseForm}>×</button>
-                        <form onSubmit={handleSubmit}>
+                        <form className='admin-car' onSubmit={handleSubmit}>
                             <div className='form-field'>
                                 <label htmlFor="car-make">Make:</label>
                                 <input type="text" id="car-make" name="make" defaultValue={currentCar ? currentCar.make : ''} required />
@@ -178,6 +179,10 @@ function Admin() {
                                 <option value="available">Available</option>
                                 <option value="not-available">Not Available</option>
                             </select>
+                            <label htmlFor="car-mileage">Mileage / Liter:</label>
+                            <input type="number" id="car-mileage" name="mileage" defaultValue={currentCar ? currentCar.mileage : ''} required />
+                            <label htmlFor="car-description">Description:</label>
+                            <textarea id="car-description" name="description" defaultValue={currentCar ? currentCar.description : ''} required />
                             <label htmlFor="car-image">Upload Image:</label>
                             <input type="file" id="car-image" name="image" accept="image/*" onChange={handleImageChange} />
                             <button type="submit">Submit</button>
@@ -189,4 +194,5 @@ function Admin() {
     );
 }
 
-export default Admin;
+
+export default withAdminCheck(Admin);

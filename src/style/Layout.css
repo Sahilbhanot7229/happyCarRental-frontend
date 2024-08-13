@@ -11,3 +11,31 @@
   background-color: #f0f0f0; /* Optional: light background for content area */
   padding: 20px; /* Padding around content */
 }
+
+/* Media Queries for responsiveness */
+@media (max-width: 1024px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 130vh;
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 150vh;
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 130vh;
+  }
+  
+}

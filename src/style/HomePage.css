@@ -1,16 +1,55 @@
+.homepage {
+  font-family: Arial, sans-serif;
+}
+
 .banner {
+  position: relative;
   width: 100%;
-  height: 500px; /* You can adjust the height as needed */
+  height: 500px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .banner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.banner .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.banner .banner-text {
+  max-width: 600px;
+}
+
+.banner .banner-text h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.banner .banner-text p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.banner .banner-text button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  cursor: pointer;
 }
 
 .how-it-works {
@@ -131,7 +170,6 @@
 
 .testimonial {
   max-width: 300px;
-  text-align: center;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -238,4 +276,9 @@
   .car-models h2, .how-it-works h2, .why-choose-us h2, .customer-testimonials h2 {
     font-size: 1.2em;
   }
+}
+
+.testimonial{
+  gap: 5px;
+  display: flex;
 }

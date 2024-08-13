@@ -1,0 +1,94 @@
+.custom-card {
+  margin-top: 50px;
+  margin-right: 200px;
+  margin-left: 200px;
+}
+
+.search-card {
+  margin-top: 10px !important;
+}
+
+.car-list-user {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.name-year {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.milage-transmission {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.price-available {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.car-user-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.price {
+  text-align: start;
+}
+
+.p-4 {
+  height: 100vh;
+}
+
+.rent-button {
+  margin-top: 10px;
+}
+
+.description-car {
+  margin-top: 10px;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1024px) {
+  .custom-card {
+    margin-right: 100px;
+    margin-left: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-card {
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+
+  .name-year, .milage-transmission, .price-available {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-card {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .name-year, .milage-transmission, .price-available {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+
+  .car-list-user {
+    grid-template-columns: 1fr;
+  }
+}

@@ -92,3 +92,68 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+.user-details {
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.user-details p {
+  margin: 10px 0;
+}
+
+.user-details p strong {
+  color: black;
+}
+
+.user-details-message {
+  color: #d9534f;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin: 0 0 20px 0;
+  }
+
+  .profile-content {
+    width: 100%;
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .sidebar ul li {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+}

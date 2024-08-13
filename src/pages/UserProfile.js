@@ -183,6 +183,28 @@ const UserProfile = () => {
     </form>
   );
 
+  const renderUserDetails = () => (
+    <div>
+      <h2>User Details</h2>
+      {userData.firstName || userData.lastName  || userData.dateOfBirth || userData.phoneNumber || userData.address || userData.city || userData.country || userData.zipCode ? (
+        <div className="user-details">
+          <p><strong>First Name:</strong> {userData.firstName}</p>
+          <p><strong>Last Name:</strong> {userData.lastName}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
+          <p><strong>Date of Birth:</strong> {userData.dateOfBirth}</p>
+          <p><strong>Phone Number:</strong> {userData.phoneNumber}</p>
+          <p><strong>Address:</strong> {userData.address}</p>
+          <p><strong>City:</strong> {userData.city}</p>
+          <p><strong>Country:</strong> {userData.country}</p>
+          <p><strong>Zip Code:</strong> {userData.zipCode}</p>
+        </div>
+      ) : (
+        <p className="user-details-message">Please add details from the profile tab.</p>
+      )}
+    </div>
+  );
+  
+
   return (
     <div className="profile-container">
       <ToastContainer />
@@ -190,11 +212,13 @@ const UserProfile = () => {
         <ul>
           <li className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>Profile</li>
           <li className={activeTab === 'changePassword' ? 'active' : ''} onClick={() => setActiveTab('changePassword')}>Change Password</li>
+          <li className={activeTab === 'userDetails' ? 'active' : ''} onClick={() => setActiveTab('userDetails')}>User Details</li>
         </ul>
       </div>
       <div className="profile-content">
         {activeTab === 'profile' && renderProfileForm()}
         {activeTab === 'changePassword' && renderChangePasswordForm()}
+        {activeTab === 'userDetails' && renderUserDetails()}
       </div>
     </div>
   );

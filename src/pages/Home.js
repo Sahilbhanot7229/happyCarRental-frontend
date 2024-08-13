@@ -1,11 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../style/HomePage.css';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const [cars, setCars] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/cars')
+      .then((response) => response.json())
+      .then((data) => setCars(data))
+      .catch((error) => console.error('Error fetching cars:', error));
+
+    fetch('http://localhost:5000/api/booking/getAllBookings')
+      .then((response) => response.json())
+      .then((data) => {
+        const allReviews = data.flatMap(booking => booking.reviews.map(review => ({
+          user: review.user.username,
+          review: review.review,
+        })));
+        setReviews(allReviews);
+      })
+      .catch((error) => console.error('Error fetching reviews:', error));
+  }, []);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const pickupDate = event.target['pickup-date'].value;
+    const pickupTime = event.target['pickup-time'].value;
+
+    navigate(`/car-page?pickup-date=${pickupDate}&pickup-time=${pickupTime}`);
+  };
+
+  const handleBookNowClick = (carId) => {
+    navigate(`/carBooking/${carId}`);
+  };
+
   return (
     <div className="homepage">
       <section className="banner">
-        <img src='./car-banner.jpeg' alt="Car by the beach" />
+        <div className="overlay">
+          <div className="banner-text">
+            <h1>Discover Your Next Journey</h1>
+            <p>Find the perfect car for your adventure. Easy, fast, and reliable.</p>
+            <button onClick={() => navigate('/car')}>Explore Now</button>
+          </div>
+        </div>
+        <img src='./home-bg-image.png' alt="Car by the beach" />
       </section>
 
       <section className="how-it-works">
@@ -39,6 +81,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
       <section className="why-choose-us">
         <h2>Why Choose Our Car Rental Service?</h2>
         <div className="features-container">
@@ -47,94 +90,90 @@ const HomePage = () => {
             <div className='feature-text'>
               <h3>Convenient Booking</h3>
               <p>Book your rental car online in just a few clicks.</p>
-
             </div>
-
           </div>
           <div className="feature">
-          <img src="./car.svg" alt="Car Selection Icon" className="feature-icon" />
-
+            <img src="./car.svg" alt="Car Selection Icon" className="feature-icon" />
             <div className='feature-text'>
-
               <h3>Wide Car Selection</h3>
               <p>Choose from a variety of reliable and well-maintained vehicles.</p>
             </div>
-
           </div>
           <div className="feature">
-          <img src="./wallet.svg" alt="Affordable Rates Icon" className="feature-icon" />
-
+            <img src="./wallet.svg" alt="Affordable Rates Icon" className="feature-icon" />
             <div className='feature-text'>
               <h3>Affordable Rates</h3>
               <p>Enjoy competitive prices and flexible rental options.</p>
             </div>
-
           </div>
           <div className="feature">
-          <img src="./shield.svg" alt="Reliable Service Icon" className="feature-icon" />
-
+            <img src="./shield.svg" alt="Reliable Service Icon" className="feature-icon" />
             <div className='feature-text'>
               <h3>Reliable Service</h3>
               <p>Experience top-notch customer support and peace of mind.</p>
             </div>
-
           </div>
         </div>
       </section>
 
       <section className="car-models">
-        <h2>Browse Our Car Models</h2>
+        <h2>Browse Our Car </h2>
         <div className="models-container">
-          <div className="model">
-            <img src="./corolla.png" alt="Toyota Corolla" />
-            <h3>Toyota Corolla</h3>
-            <p>Compact sedan with great fuel efficiency.</p>
-            <p>$50/day</p>
-            <button>Rent Now</button>
-          </div>
-          <div className="model">
-            <img src="./civic.png" alt="Honda Civic" />
-            <h3>Honda Civic</h3>
-            <p>Reliable and spacious midsize sedan.</p>
-            <p>$60/day</p>
-            <button>Rent Now</button>
-          </div>
-          <div className="model">
-            <img src="./mustang.png" alt="Ford Mustang" />
-            <h3>Ford Mustang</h3>
-            <p>Powerful and stylish sports car.</p>
-            <p>$80/day</p>
-            <button>Rent Now</button>
-          </div>
+          {cars.map((car) => (
+            <div className="model" key={car._id}>
+              <img src={`data:${car.imageId.contentType};base64,${car.imageId.imageBase64}`} alt={car.name} />
+              <div className="car-details">
+                <div className="car-name">
+                  <div>
+                    <h2 className="text-lg font-medium">{car.model}</h2>
+                    <p className="text-gray-500">{car.make}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500">{car.year}</p>
+                    <p className={`text-sm font-medium ${car.availability === 'available' ? 'text-green-500' : 'text-red-500'}`}>
+                      {car.availability}
+                    </p>
+                  </div>
+                </div>
+
+                <div className='price'>
+                  <p> ${car.price} / hour</p>
+                </div>
+
+                <div className="car-button flex space-x-2">
+                  <button 
+                    className={`bg-black text-white py-2 px-4 rounded-md ${car.availability !== 'available' ? 'opacity-50 cursor-not-allowed' : 'hover:bg-black'}`}
+                    onClick={() => handleBookNowClick(car._id)}
+                    disabled={car.availability !== 'available'}
+                  >
+                    Book Now
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="customer-testimonials">
         <h2>What Our Customers Say</h2>
         <div className="testimonials-container">
-          <div className="testimonial">
-            <img src="./user.svg" alt="User icon" className="testimonial-icon" />
+          {reviews.map((review, index) => (
+            <div className="testimonial" key={index}>
+              <div className='testimonial-img'>
+              <img src="./user.svg" alt="User icon" className="testimonial-icon" />
 
-            <h3>Sahil</h3>
-            <p>San Francisco, CA</p>
-            <p>"I had a great experience renting a car from this service. The process was easy, the car was in excellent condition, and the customer service was top-notch."</p>
-          </div>
-          <div className="testimonial">
-          <img src="./user.svg" alt="User icon" className="testimonial-icon" />
-          <h3>harmanjit </h3>
-            <p>Los Angeles, CA</p>
-            <p>"I was impressed by the wide selection of cars and their competitive prices. The rental process was seamless, and I would definitely use this service again."</p>
-          </div>
-          <div className="testimonial">
-          <img src="./user.svg" alt="User icon" className="testimonial-icon" />
-          <h3>Sajja</h3>
-            <p>Chicago, IL</p>
-            <p>"I was really impressed with the customer service. They helped me find the perfect car for my needs and made the rental process a breeze. I highly recommend this service."</p>
-          </div>
+                </div>
+                <div className='testimonial-text'>
+                <h3>{review.user}</h3>
+                <p>{review.review}</p>
+                  </div>
+       
+            </div>
+          ))}
         </div>
       </section>
-
-
     </div>
   );
 };

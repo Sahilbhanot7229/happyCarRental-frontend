@@ -40,15 +40,14 @@ const Navbar = () => {
     ? user.isAdmin
       ? [
           { title: 'Add Car', path: '/Admin' },
-          { title: 'List Cars', path: '/list-cars' },
-          { title: 'Users', path: '/users' },
+          { title: 'Users', path: '/userManagement' },
           { title: 'Booked Car List', path: '/booked-cars' },
         ]
       : [
           { title: 'Home', path: '/' },
-          { title: 'Cars', path: '/' },
+          { title: 'Cars', path: '/car' },
           { title: 'Profile', path: '/profile' },
-          { title: 'My Booking', path: '/' },
+          { title: 'My Booking', path: '/myBookings' },
           { title: 'Contact Us', path: '/contactUs' },
         ]
     : [
